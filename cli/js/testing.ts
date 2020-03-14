@@ -223,11 +223,9 @@ function createFilterFn(
       }
     }
 
-    console.table(def);
     if (def.skip) {
       passes = false;
     }
-    console.log('passes: ', passes);
     return passes;
   };
 }
