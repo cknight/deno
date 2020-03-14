@@ -18,6 +18,7 @@ export type TestFunction = () => void | Promise<void>;
 export interface TestDefinition {
   fn: TestFunction;
   name: string;
+  skip?: boolean;
 }
 
 const TEST_REGISTRY: TestDefinition[] = [];
@@ -32,6 +33,7 @@ export function test(
   fn?: TestFunction
 ): void {
   let name: string;
+  let skip = false;
 
   if (typeof t === "string") {
     if (!fn) {
@@ -56,9 +58,12 @@ export function test(
     if (!name) {
       throw new Error("The name of test case can't be empty");
     }
+    if (t.skip) {
+      skip = true;
+    }
   }
 
-  TEST_REGISTRY.push({ fn, name });
+  TEST_REGISTRY.push({ fn, name, skip });
 }
 
 interface TestStats {
@@ -218,6 +223,11 @@ function createFilterFn(
       }
     }
 
+    console.table(def);
+    if (def.skip) {
+      passes = false;
+    }
+    console.log('passes: ', passes);
     return passes;
   };
 }

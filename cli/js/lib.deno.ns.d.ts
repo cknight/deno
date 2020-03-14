@@ -17,6 +17,7 @@ declare namespace Deno {
   export interface TestDefinition {
     fn: TestFunction;
     name: string;
+    skip?: boolean;
   }
 
   /** Register a test which will be run when `deno test` is used on the command
