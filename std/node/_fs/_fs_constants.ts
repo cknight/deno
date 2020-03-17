@@ -16,3 +16,8 @@ export const S_IXGRP = 0o10; //execute/search by group
 export const S_IROTH = 0o4; //read by others
 export const S_IWOTH = 0o2; //write by others
 export const S_IXOTH = 0o1; //execute/search by others
+
+//File copy constants
+export const COPYFILE_EXCL = 1;
+export const COPYFILE_FICLONE = 2;
+export const COPYFILE_FICLONE_FORCE = 4;
