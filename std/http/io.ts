@@ -7,8 +7,8 @@ import { STATUS_TEXT } from "./http_status.ts";
 
 export function emptyReader(): Deno.Reader {
   return {
-    async read(_: Uint8Array): Promise<number | Deno.EOF> {
-      return Deno.EOF;
+    read(_: Uint8Array): Promise<number | Deno.EOF> {
+      return Promise.resolve(Deno.EOF);
     }
   };
 }
@@ -242,7 +242,7 @@ export async function writeResponse(
   const statusText = STATUS_TEXT.get(statusCode);
   const writer = BufWriter.create(w);
   if (!statusText) {
-    throw Error("bad status code");
+    throw new Deno.errors.InvalidData("Bad status code");
   }
   if (!r.body) {
     r.body = new Uint8Array();

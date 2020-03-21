@@ -5,7 +5,7 @@ import Dirent from "./_fs_dirent.ts";
 
 test({
   name: "Closing current directory with callback is successful",
-  async fn() {
+  fn() {
     let calledBack = false;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     new Dir(".").close((valOrErr: any) => {
@@ -25,7 +25,7 @@ test({
 
 test({
   name: "Closing current directory synchronously works",
-  async fn() {
+  fn() {
     new Dir(".").closeSync();
   }
 });
@@ -71,8 +71,10 @@ test({
   name: "Async read returns one file at a time",
   async fn() {
     const testDir: string = Deno.makeTempDirSync();
-    Deno.createSync(testDir + "/foo.txt");
-    Deno.createSync(testDir + "/bar.txt");
+    const f1 = Deno.createSync(testDir + "/foo.txt");
+    f1.close();
+    const f2 = Deno.createSync(testDir + "/bar.txt");
+    f2.close();
 
     try {
       let secondCallback = false;
@@ -108,8 +110,10 @@ test({
   name: "Sync read returns one file at a time",
   fn() {
     const testDir: string = Deno.makeTempDirSync();
-    Deno.createSync(testDir + "/foo.txt");
-    Deno.createSync(testDir + "/bar.txt");
+    const f1 = Deno.createSync(testDir + "/foo.txt");
+    f1.close();
+    const f2 = Deno.createSync(testDir + "/bar.txt");
+    f2.close();
 
     try {
       const dir: Dir = new Dir(testDir);
@@ -135,8 +139,10 @@ test({
   name: "Async iteration over existing directory",
   async fn() {
     const testDir: string = Deno.makeTempDirSync();
-    Deno.createSync(testDir + "/foo.txt");
-    Deno.createSync(testDir + "/bar.txt");
+    const f1 = Deno.createSync(testDir + "/foo.txt");
+    f1.close();
+    const f2 = Deno.createSync(testDir + "/bar.txt");
+    f2.close();
 
     try {
       const dir: Dir = new Dir(testDir);

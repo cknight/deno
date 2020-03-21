@@ -28,9 +28,7 @@ exec_time_benchmarks = [
     ("workers_startup", ["cli/tests/workers_startup_bench.ts"]),
     ("workers_round_robin", ["cli/tests/workers_round_robin_bench.ts"]),
     ("text_decoder", ["cli/tests/text_decoder_perf.js"]),
-    ("core_decode", ["cli/tests/core_decode_perf.js"]),
     ("text_encoder", ["cli/tests/text_encoder_perf.js"]),
-    ("core_encode", ["cli/tests/core_encode_perf.js"]),
 ]
 
 
@@ -225,15 +223,8 @@ def bundle_benchmark(deno_exe):
     return sizes
 
 
-def main(argv):
-    if len(argv) == 2:
-        build_dir = sys.argv[1]
-    elif len(argv) == 1:
-        build_dir = build_path()
-    else:
-        print "Usage: tools/benchmark.py [build_dir]"
-        sys.exit(1)
-
+def main():
+    build_dir = build_path()
     sha1 = run_output(["git", "rev-parse", "HEAD"],
                       exit_on_fail=True).out.strip()
     http_server.spawn()
@@ -273,4 +264,4 @@ def main(argv):
 
 
 if __name__ == '__main__':
-    main(sys.argv)
+    main()
