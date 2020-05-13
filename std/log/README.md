@@ -61,6 +61,20 @@ unknownLogger.info("foobar"); // no-op
 
 ## Advanced usage
 
+### Inline Logging
+The log methods return the first argument given to them, allowing log statements to be inlined with your code & reducing total lines of code.
+```typescript
+const fizz = logger.debug("fizz"); // logs & returns "fizz"
+const buzzer = logger.warning({ buzzer: "buzz" }); // logs & returns { buzzer: "buzz" }
+```
+
+### Lazy Log Evaluation
+In the event that it's expensive to log certain things, you can cause the logger to only evaluate what's given to it if the statement would be logged according to the logger's current level:
+```typescript
+logger.debug(() => `this is expensive: ${expensiveFn(5)}`); // does not ineterpolate string if level is info or higher
+logger.info(() => `this is expensive: ${expensiveFn(5)}`); // interpolates string if level is above info or higher
+```
+
 ### Loggers
 
 Loggers are objects that you interact with. When you use a logger method it
